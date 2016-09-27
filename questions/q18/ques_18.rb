@@ -17,7 +17,7 @@ module Ques18
         next_piece = piece.next
         cut(berry: next_piece.berry, whole: next_piece.whole)
       end
-      piece.whole.size == 0
+      piece.whole.size == 0 && self.squares.include?(piece.berry + 1)
     end
 
     class Piece < Struct.new(:berry, :whole, :squares)
@@ -30,7 +30,6 @@ module Ques18
       def next
         next_berry = valid_berry_count.pop
         remain_berries = whole.delete_if{|s| s == next_berry}
-        p "berry:#{berry}", "#{next_berry}", remain_berries
         Piece.new(next_berry, remain_berries, self.squares)
       end
 
@@ -45,7 +44,6 @@ module Ques18
   while(true) do
     squares = (1..(2 * n)).map{|c| c ** 2}
     #binding.pry
-    p "n:#{n}", "squres:#{squares}"
     cake = Cake.new(n, squares)
 
     break if cake.cut
